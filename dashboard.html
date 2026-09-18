@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NoteCraft - Dashboard</title>
+<link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+   <div class="brand">
+
+    <svg
+        class="dashboard-code-logo"
+        viewBox="0 0 100 100"
+        xmlns="http://www.w3.org/2000/svg"
+        role="img"
+        aria-label="NoteCraft NC logo"
+    >
+
+        <defs>
+            <linearGradient
+                id="dashboardLogoGradient"
+                x1="10%"
+                y1="10%"
+                x2="90%"
+                y2="90%"
+            >
+                <stop offset="0%" stop-color="#4338ca"/>
+                <stop offset="55%" stop-color="#22d3ee"/>
+                <stop offset="100%" stop-color="#a78bfa"/>
+            </linearGradient>
+        </defs>
+
+        <!-- Letter C -->
+        <path
+            d="
+                M80 23
+                C72 15 62 11 50 11
+                C28 11 12 28 12 50
+                C12 72 28 89 50 89
+                C63 89 73 84 80 77
+            "
+            fill="none"
+            stroke="url(#dashboardLogoGradient)"
+            stroke-width="12"
+            stroke-linecap="round"
+        />
+
+        <!-- Letter N -->
+        <path
+            d="
+                M32 72
+                V28
+                L68 72
+                V28
+            "
+            fill="none"
+            stroke="url(#dashboardLogoGradient)"
+            stroke-width="12"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        />
+
+        <!-- Folded-page detail -->
+        <path
+            d="M61 65 L68 72 L68 60 Z"
+            fill="#c4b5fd"
+        />
+
+    </svg>
+
+    <span>
+        Note<span>Craft</span>
+    </span>
+
+</div> 
+    <button class="new-note" id="newNoteBtn">＋ New Note</button>
+    <nav>
+      <button class="nav-item active" data-view="all">▣ <span>All Notes</span><b id="allCount">0</b></button>
+      <button class="nav-item" data-view="favorites">★ <span>Favorites</span><b id="favCount">0</b></button>
+      <button class="nav-item" data-view="trash">♜ <span>Trash</span><b id="trashCount">0</b></button>
+    </nav>
+    <div class="sidebar-bottom">
+      <button class="nav-item" id="clearAllBtn">⚙ <span>Clear All Data</span></button>
+      <button class="nav-item" id="logoutBtn">↪ <span>Logout</span></button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div>
+        <h1 id="viewTitle">My Notes</h1>
+        <p id="viewSubtitle">Organize. Create. Inspire.</p>
+      </div>
+      <div class="top-actions">
+        <label class="search"><span>⌕</span><input id="searchInput" placeholder="Search notes..."></label>
+        <div class="avatar" title="NoteCraft User">U</div>
+      </div>
+    </header>
+
+    <section class="stats">
+      <div class="stat-card"><span class="stat-icon purple">▣</span><div><small>Total Notes</small><strong id="statTotal">0</strong></div></div>
+      <div class="stat-card"><span class="stat-icon pink">★</span><div><small>Favorites</small><strong id="statFav">0</strong></div></div>
+      <div class="stat-card"><span class="stat-icon blue">✎</span><div><small>Words Written</small><strong id="statWords">0</strong></div></div>
+    </section>
+
+    <div class="section-head"><h2 id="sectionTitle">Recent Notes</h2><button id="sortBtn">Sort: Newest ▾</button></div>
+    <section class="notes-grid" id="notesGrid"></section>
+    <div class="empty" id="emptyState" hidden><div>📝</div><h3>No notes found</h3><p>Create a note or change your search/filter.</p><button class="new-note" id="emptyNewBtn">＋ Create Note</button></div>
+  </main>
+</div>
+
+<div class="modal" id="editorModal">
+  <div class="editor-card">
+    <div class="editor-head"><h2 id="modalTitle">New Note</h2><button class="close" id="closeModal">×</button></div>
+    <input id="noteTitle" class="title-input" placeholder="Note title">
+    <textarea id="noteContent" placeholder="Start writing your note..."></textarea>
+    <div class="editor-footer">
+      <span id="wordCount">0 words</span>
+      <div><button class="cancel" id="cancelBtn">Cancel</button><button class="save" id="saveBtn">Save Note</button></div>
+    </div>
+  </div>
+</div>
+
+<script src="dashboard.js"></script>
+</body>
+</html>
