@@ -1,4 +1,4 @@
-NoteCraft is a smart digital notes management application designed to help users create,
+<H1> INTRODUCTION </H1> <br> NoteCraft is a smart digital notes management application designed to help users create,
 organize, and manage their notes in a simple and efficient manner. It provides a convenient
 platform where users can store their important information in digital form instead of relying on
 traditional paper notebooks.
