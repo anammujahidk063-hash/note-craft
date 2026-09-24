@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>NoteCraft - Student Registration</title>
+
+    <link rel="stylesheet" href="register.css">
+    <link rel="stylesheet" href="button-animation.css">
+<script src="button-animation.js" defer></script>
+</head>
+
+<body>
+
+    <main class="register-page">
+
+        <a class="back-button" href="login.html">
+            ← Back to Login
+        </a>
+
+        <section class="register-card">
+
+            <div class="logo">NC</div>
+
+            <h1>
+                Note<span>Craft</span>
+            </h1>
+
+            <p class="page-name">
+                STUDENT REGISTRATION
+            </p>
+
+            <h2>Create Account</h2>
+
+            <p class="welcome-text">
+                Register to create and manage your notes
+            </p>
+
+            <form id="registerForm">
+
+                <!-- Student name -->
+                <label for="studentName">
+                    Student Name
+                </label>
+
+                <input
+                    type="text"
+                    id="studentName"
+                    placeholder="Enter your full name"
+                    autocomplete="name"
+                    required
+                >
+
+                <!-- Email -->
+                <label for="studentEmail">
+                    Email ID
+                </label>
+
+                <input
+                    type="email"
+                    id="studentEmail"
+                    placeholder="Enter your email ID"
+                    autocomplete="email"
+                    required
+                >
+
+                <!-- Password -->
+                <label for="studentPassword">
+                    Password
+                </label>
+
+                <div class="password-box">
+
+                    <input
+                        type="password"
+                        id="studentPassword"
+                        placeholder="Create a password"
+                        autocomplete="new-password"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        id="showPassword"
+                        aria-label="Show password"
+                    >
+                        👁
+                    </button>
+
+                </div>
+
+                <!-- Phone -->
+                <label for="studentPhone">
+                    Phone Number
+                </label>
+
+                <input
+                    type="tel"
+                    id="studentPhone"
+                    placeholder="Enter 10-digit phone number"
+                    autocomplete="tel"
+                    maxlength="10"
+                    required
+                >
+
+                <!-- Error or success message -->
+                <p id="formMessage"></p>
+
+                <button
+                    class="register-button"
+                    type="submit"
+                >
+                    Register
+                </button>
+
+            </form>
+
+            <p class="login-link">
+                Already have an account?
+
+                <a href="login.html">
+                    Login here
+                </a>
+            </p>
+
+        </section>
+
+    </main>
+
+    <script src="register.js"></script>
+
+</body>
+</html>

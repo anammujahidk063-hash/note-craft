@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>NoteCraft - Admin Login</title>
+
+    <link rel="stylesheet" href="admin-login.css">
+    <link rel="stylesheet" href="button-animation.css">
+<script src="button-animation.js" defer></script>
+</head>
+
+<body>
+
+    <main class="admin-login-page">
+
+        <a class="back-button" href="index.html">
+            ← Back
+        </a>
+
+        <section class="login-card">
+
+            <div class="logo">NC</div>
+
+            <h1>
+                Note<span>Craft</span>
+            </h1>
+
+            <p class="portal-name">
+                ADMIN PORTAL
+            </p>
+
+            <h2>Admin Login</h2>
+
+            <p class="welcome-text">
+                Enter your Admin username and password
+            </p>
+
+            <form id="adminLoginForm">
+
+                <label for="adminUsername">
+                    Admin Username
+                </label>
+
+                <input
+                    type="text"
+                    id="adminUsername"
+                    placeholder="Enter Admin username"
+                    required
+                >
+
+                <label for="adminPassword">
+                    Password
+                </label>
+
+                <div class="password-box">
+
+                    <input
+                        type="password"
+                        id="adminPassword"
+                        placeholder="Enter password"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        id="showPassword"
+                    >
+                        👁
+                    </button>
+
+                </div>
+
+                <label class="remember">
+                    <input type="checkbox">
+                    Remember me
+                </label>
+
+                <p id="errorMessage"></p>
+
+                <button
+                    class="login-button"
+                    type="submit"
+                >
+                    Login as Admin
+                </button>
+
+            </form>
+
+            <p class="security-text">
+                🔒 Authorized administrators only
+            </p>
+
+        </section>
+
+    </main>
+
+    <script src="admin-login.js"></script>
+
+</body>
+</html>

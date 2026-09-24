@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NoteCraft | Student Dashboard</title>
+  <link rel="stylesheet" href="dashboard.css">
+  <script src="dashboard.js" defer></script>
+  <link rel="stylesheet" href="button-animation.css">
+<script src="button-animation.js" defer></script>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <a class="brand" href="#dashboard">
+        <span class="brand-icon">▤</span>
+        <span>Note<span class="accent">Craft</span></span>
+      </a>
+
+      <p class="workspace-label">STUDENT WORKSPACE</p>
+
+      <nav aria-label="Main navigation">
+        <button class="nav-item active" data-page="dashboard">
+          <span class="nav-icon">▦</span> Dashboard
+        </button>
+
+        <button class="nav-item" data-page="subjects">
+          <span class="nav-icon">▱</span> Class &amp; subjects
+        </button>
+
+        <button class="nav-item" data-page="approved">
+          <span class="nav-icon">▤</span> Approved notes
+        </button>
+
+        <button class="nav-item" data-page="personal">
+          <span class="nav-icon">✎</span> My notes
+        </button>
+
+        <button class="nav-item" data-create>
+          <span class="nav-icon">＋</span> Create note
+        </button>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="profile">
+          <div class="avatar">VI</div>
+          <div>
+            <strong>Vikas Bhadouriya</strong>
+            <small>Student</small>
+          </div>
+        </div>
+
+        <button class="nav-item" id="logoutBtn">
+          <span class="nav-icon">↪</span> Log out
+        </button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <p>Workspace <span>/</span> <span id="breadcrumb">Dashboard</span></p>
+        <span class="access-badge">Student access</span>
+      </header>
+
+      <div class="content">
+        <section id="dashboardPage">
+          <div class="welcome">
+            <div>
+              <h1>Welcome, Vikas.</h1>
+              <p>A fresh page for your next big idea.</p>
+            </div>
+            <button class="primary-btn" data-create>＋ Create note</button>
+          </div>
+
+          <section class="study-banner">
+            <div>
+              <p class="eyebrow">YOUR NEXT STUDY SESSION</p>
+              <h2>Find your subject. Get into your flow.</h2>
+              <p>Explore approved notes, organized around your course.</p>
+            </div>
+            <button class="secondary-btn" data-page="subjects">
+              Browse subjects <span>→</span>
+            </button>
+          </section>
+
+          <section class="stats" aria-label="Dashboard statistics">
+            <article class="stat-card">
+              <div><span>Approved notes</span><span class="accent">▤</span></div>
+              <strong>0</strong>
+            </article>
+            <article class="stat-card">
+              <div><span>My personal notes</span><span class="accent">✎</span></div>
+              <strong id="personalCount">0</strong>
+            </article>
+            <article class="stat-card">
+              <div><span>Subjects available</span><span class="accent">▱</span></div>
+              <strong>0</strong>
+            </article>
+          </section>
+
+          <div class="section-heading">
+            <h2>Start with your class</h2>
+            <p>Find your semester next</p>
+          </div>
+
+          <div class="year-grid" id="dashboardYears"></div>
+        </section>
+
+        <section id="subjectsPage" hidden>
+          <div class="page-heading">
+            <p class="eyebrow">YOUR COURSE</p>
+            <h1>Class &amp; subjects</h1>
+            <p>Select your year, then choose your semester.</p>
+          </div>
+
+          <div class="year-grid" id="subjectYears"></div>
+
+          <section class="selection-panel" id="semesterPanel" hidden>
+            <h2 id="semesterTitle">Choose your semester</h2>
+            <div class="semester-grid" id="semesterGrid"></div>
+          </section>
+
+          <div class="empty-state" id="subjectEmpty" hidden>
+            <span class="empty-icon">▱</span>
+            <h2 id="subjectHeading">No subjects available</h2>
+            <p>Your course subjects will appear after backend integration.</p>
+          </div>
+        </section>
+
+        <section id="approvedPage" hidden>
+          <div class="page-heading">
+            <p class="eyebrow">STUDY MATERIAL</p>
+            <h1>Approved notes</h1>
+            <p>Access notes approved by your administrator.</p>
+          </div>
+
+          <div class="empty-state">
+            <span class="empty-icon">▤</span>
+            <h2>No approved notes available</h2>
+            <p>This interface is not connected to the admin notes database yet.</p>
+          </div>
+        </section>
+
+        <section id="personalPage" hidden>
+          <div class="welcome">
+            <div>
+              <h1>My notes</h1>
+              <p>Create, edit, and organize your personal notes.</p>
+            </div>
+            <button class="primary-btn" data-create>＋ Create note</button>
+          </div>
+
+          <div class="notes-toolbar">
+            <input
+              id="searchInput"
+              type="search"
+              placeholder="Search your notes..."
+              aria-label="Search your notes"
+            >
+            <select id="sortSelect" aria-label="Sort notes">
+              <option value="newest">Newest first</option>
+              <option value="oldest">Oldest first</option>
+            </select>
+          </div>
+
+          <p class="storage-hint">Personal notes are saved in this browser.</p>
+
+          <div class="notes-grid" id="notesGrid"></div>
+
+          <div class="empty-state" id="notesEmpty">
+            <span class="empty-icon">✎</span>
+            <h2 id="emptyTitle">No personal notes yet</h2>
+            <p>Create a note to get started.</p>
+            <button class="primary-btn" data-create>＋ Create note</button>
+          </div>
+        </section>
+
+        <p id="status" class="status" role="status" hidden></p>
+      </div>
+    </main>
+  </div>
+
+  <dialog id="editorDialog">
+    <form id="noteForm">
+      <div class="editor-header">
+        <h2 id="editorTitle">Create note</h2>
+        <button type="button" class="icon-btn" id="closeEditor" aria-label="Close">
+          ×
+        </button>
+      </div>
+
+      <label for="noteTitle">Title</label>
+      <input
+        id="noteTitle"
+        placeholder="Enter note title"
+        maxlength="150"
+        required
+      >
+
+      <label for="noteContent">Your note</label>
+      <textarea id="noteContent" placeholder="Start writing..."></textarea>
+
+      <p id="editorError" class="error" role="alert" hidden></p>
+
+      <div class="editor-footer">
+        <span id="wordCount">0 words</span>
+        <div>
+          <button type="button" class="secondary-btn" id="cancelEditor">
+            Cancel
+          </button>
+          <button type="submit" class="primary-btn">Save note</button>
+        </div>
+      </div>
+    </form>
+  </dialog>
+  <!-- Logout confirmation popup -->
+<dialog
+    id="logoutDialog"
+    aria-labelledby="logoutTitle"
+    aria-describedby="logoutDescription"
+>
+    <h2 id="logoutTitle">Log out?</h2>
+
+    <p id="logoutDescription">
+        Kya aap logout karna chahte hain?
+    </p>
+
+    <div class="logout-dialog-actions">
+        <button
+            type="button"
+            id="cancelLogout"
+            autofocus
+        >
+            No, stay here
+        </button>
+
+        <button
+            type="button"
+            id="confirmLogout"
+        >
+            Yes, log out
+        </button>
+    </div>
+</dialog>
+
+<link rel="stylesheet" href="logout-popup.css">
+<script src="logout-popup.js" defer></script>
+</body>
+</html>

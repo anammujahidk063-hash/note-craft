@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NoteCraft — Admin workspace</title>
+  <link rel="stylesheet" href="admin-dashboard.css">
+  <script src="admin-dashboard.js" defer></script>
+  <link rel="stylesheet" href="button-animation.css">
+<script src="button-animation.js" defer></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="#dashboard"><span class="logo">▤</span>Note<span>Craft</span></a>
+    <p class="eyebrow">ADMIN WORKSPACE</p>
+    <nav aria-label="Admin navigation">
+      <a href="#dashboard">▦ <span>Dashboard</span></a>
+      <a href="#upload">↥ <span>Upload notes</span></a>
+      <a href="#review">◷ <span>Review notes</span></a>
+      <a href="#manage">▱ <span>Manage notes</span></a>
+    </nav>
+    <div class="profile">
+  <span class="avatar">AD</span>
+  <div>
+    <strong>Administrator</strong>
+    <small>Administrator</small>
+  </div>
+</div>
+
+<button type="button" id="adminLogoutBtn" class="logout-btn">
+  <span aria-hidden="true">↪</span>
+  Log out
+</button>
+  </aside>
+  <main>
+    <header><div>Workspace <span class="slash">/</span> <span id="breadcrumb">Dashboard</span></div><span class="badge">Admin preview</span></header>
+    <div class="content">
+      <p class="notice">Local demo · Notes and attachments stay in this browser. Student sharing requires backend integration.</p>
+      <p id="message" role="status" hidden></p>
+      <section id="dashboard" class="page">
+        <div class="heading"><div><h1>Your teaching workspace.</h1><p>Organize knowledge. Help students move forward.</p></div><a class="primary" href="#upload">＋ Upload notes</a></div>
+        <div class="banner"><div><p class="eyebrow">MAKE LEARNING EASIER</p><h2>A home for every study resource.</h2><p>Upload material, review it, and keep your notes organized.</p></div><a class="secondary" href="#review">Review notes →</a></div>
+        <div id="stats" class="stats"></div>
+        <div class="heading"><h2>Recent notes</h2><a href="#manage">View all →</a></div><div id="recent" class="cards"></div>
+      </section>
+      <section id="upload" class="page" hidden>
+        <div class="heading"><div><h1>Upload study notes</h1><p>Add material and submit it for review.</p></div></div>
+        <form id="noteForm" class="panel">
+          <label>Note title<input name="title" maxlength="150" placeholder="e.g. Linked lists — revision notes" required></label>
+          <div class="form-grid"><label>Subject<input name="subject" list="subjects" maxlength="100" placeholder="e.g. Data Structures" required><datalist id="subjects"><option>Data Structures</option><option>DBMS</option><option>Software Engineering</option><option>Mathematics</option><option>Computer Networks</option></datalist></label><label>Unit / topic <span class="muted">(optional)</span><input name="unit" maxlength="100" placeholder="e.g. Unit 2"></label></div>
+          <div class="form-grid"><label>Class<select name="year" id="year"><option value="1">Year 1</option><option value="2">Year 2</option><option value="3">Year 3</option><option value="4">Year 4</option></select></label><label>Semester<select name="semester" id="semester"></select></label></div>
+          <label>Description / note content<textarea name="content" rows="7" maxlength="100000" placeholder="Write definitions, examples and the points you want to remember..." required></textarea></label>
+          <label class="attachment">Attach study material <span class="muted">(optional)</span><input name="attachment" type="file" accept=".pdf,.txt,.png,.jpg,.jpeg,.docx,.pptx"><small>PDF, text, images, Word or PowerPoint · Up to 10 MB</small></label>
+          <div class="actions"><button class="primary" type="submit">Submit for review →</button><button type="reset" class="secondary">Clear form</button></div>
+        </form>
+      </section>
+      <section id="listing" class="page" hidden>
+        <div class="heading"><div><h1 id="listTitle">Manage shared notes</h1><p id="listSubtitle">Organize material and review its status.</p></div><a class="primary" href="#upload">＋ Upload notes</a></div>
+        <div id="tabs" class="tabs" aria-label="Filter by status"></div>
+        <div class="filters"><input id="search" type="search" aria-label="Search notes" placeholder="Search title, topic or content..."><select id="filterYear" aria-label="Filter class"><option value="">All classes</option><option value="1">Year 1</option><option value="2">Year 2</option><option value="3">Year 3</option><option value="4">Year 4</option></select><select id="filterSemester" aria-label="Filter semester"><option value="">All semesters</option></select><select id="filterSubject" aria-label="Filter subject"><option value="">All subjects</option></select><button id="resetFilters" class="secondary">Reset</button></div>
+        <p id="resultCount" class="muted"></p><div id="notes" class="cards"></div>
+      </section>
+    </div>
+  </main>
+  <dialog id="detail"><button id="closeDetail" class="secondary close" aria-label="Close note">✕</button><h2 id="detailTitle"></h2><p id="detailMeta" class="muted"></p><p id="detailContent"></p><button id="download" class="primary" hidden>Download attachment</button></dialog>
+<!-- Logout confirmation popup -->
+<dialog
+    id="logoutDialog"
+    aria-labelledby="logoutTitle"
+    aria-describedby="logoutDescription"
+>
+    <h2 id="logoutTitle">Log out?</h2>
+
+    <p id="logoutDescription">
+        Kya aap logout karna chahte hain?
+    </p>
+
+    <div class="logout-dialog-actions">
+        <button
+            type="button"
+            id="cancelLogout"
+            autofocus
+        >
+            No, stay here
+        </button>
+
+        <button
+            type="button"
+            id="confirmLogout"
+        >
+            Yes, log out
+        </button>
+    </div>
+</dialog>
+
+<link rel="stylesheet" href="logout-popup.css">
+<script src="logout-popup.js" defer></script>
+</body>
+</html>
