@@ -139,34 +139,253 @@ function createYearCards(containerId) {
   });
 }
 
-function selectYear(year) {
-  $("semesterPanel").hidden = false;
-  $("subjectEmpty").hidden = true;
-  $("semesterTitle").textContent = `${yearLabels[year - 1]} — choose semester`;
+// Semester 3 names below are examples.
+// Replace them with your exact syllabus subjects.
+// Add the remaining semesters' subjects in their arrays.
+const subjectsBySemester = {
+  // FIRST YEAR — SEMESTER 1
+  1: [
+    "Problem Solving using C Programming",
+    "C Programming Practical",
+    "Matrix Algebra",
+    "Mathematics Practical I",
+    "Principles of Analog Electronics",
+    "Electronics Practical Course I",
+    "Generic Indian Knowledge System (IKS)",
+    "Statistical Methods for Computer Science I",
+    "English",
+    "Environmental Studies I (EVS-I)",
+    "Open Elective - other faculty / university basket"
+  ],
 
-  document.querySelectorAll("#subjectYears .year-card").forEach((button) => {
-    const selected = Number(button.dataset.year) === year;
-    button.classList.toggle("selected", selected);
-    button.setAttribute("aria-pressed", String(selected));
-  });
+  // FIRST YEAR — SEMESTER 2
+  2: [
+    "Advanced C Programming",
+    "Advanced C Programming Practical",
+    "Graph Theory",
+    "Mathematics Practical II",
+    "Principles of Digital Electronics",
+    "Electronics Practical Course II",
+    "Statistical Methods for Computer Science II",
+    "English",
+    "Environmental Studies II (EVS-II)",
+    "Open Elective - other faculty / university basket",
+    "Co-curricular Course - university basket"
+  ],
+
+  // SECOND YEAR — SEMESTER 3
+  3: [
+    "Data Structure I",
+    "Database Management System I",
+    "Data Structure I and DBMS I Practical",
+    "Software Engineering",
+    "Indian Knowledge System in Computing",
+    "Mini Project",
+    "Mathematics or Electronics - Minor (Theory and Practical)",
+    "Open Elective - college-approved choice",
+    "Ability Enhancement Course - university basket",
+    "Co-curricular Course - university basket"
+  ],
+
+  // SECOND YEAR — SEMESTER 4
+  4: [
+    "Data Structure II",
+    "Database Management System II",
+    "Data Structure II and DBMS II Practical",
+    "Advanced Python Programming",
+    "Mini Project",
+    "Mathematics or Electronics - Minor (Theory and Practical)",
+    "Computer Networks",
+    "Statistical Analysis using R Software",
+    "Open Elective - college-approved choice",
+    "Ability Enhancement Course - university basket",
+    "Co-curricular Course - university basket"
+  ],
+
+  // THIRD YEAR — SEMESTER 5
+  5: [
+    "Core Java",
+    "Operating Systems",
+    "Web Technology I",
+    "Theory of Computer Science",
+    "Operating Systems Practical",
+    "Core Java and Web Technology I Practical",
+    "Foundation of Artificial Intelligence and Machine Learning",
+    "Project",
+    "Mathematics or Electronics - Minor",
+    "Data Science and Analytics (Elective)",
+    "Database Technologies (Elective)",
+    "Embedded Systems (Elective)"
+  ],
+
+  // THIRD YEAR — SEMESTER 6
+  6: [
+    "Advanced Java",
+    "Design Framework",
+    "Web Technology II",
+    "Compiler Construction",
+    "Design Framework Practical",
+    "Advanced Java and Web Technology II Practical",
+    "Agile Processes",
+    "On Job Training (OJT)",
+    "Android Programming (Elective)",
+    "Software Testing Tools (Elective)",
+    "Internet of Things (Elective)"
+  ],
+
+  // FOURTH YEAR — SEMESTER 7
+  // Confirm these against your college's final syllabus.
+  7: [
+    "Advanced Operating System",
+    "Artificial Intelligence",
+    "Principles of Programming Language",
+    "Advanced Operating System Practical",
+    "Artificial Intelligence Practical",
+    "Research Methodology",
+    "Advance Databases and Web Technologies (Elective)",
+    "Cloud Computing (Elective)",
+    "C# .NET Programming (Elective)",
+    "Advanced Networking (Honours)",
+    "Digital Marketing (Honours)",
+    "Research Project (Honours with Research)"
+  ],
+
+  // FOURTH YEAR — SEMESTER 8
+  // Confirm these against your college's final syllabus.
+  8: [
+    "Design and Analysis of Algorithms",
+    "Mobile App Development Technologies",
+    "Software Project Management",
+    "Design and Analysis of Algorithms Practical",
+    "Mobile App Development Technologies Practical",
+    "Full Stack Development I (Elective)",
+    "Web Services (Elective)",
+    "ASP DOT Net Programming (Elective)",
+    "Crypto Currency Technologies (Honours)",
+    "Cyber Security (Honours)",
+    "On Job Training (OJT) (Honours)",
+    "Research Project (Honours with Research)"
+  ]
+};
+let selectedYear = null;
+let selectedSemester = null;
+let selectedSubject = "";
+
+function resetSubjectFilter() {
+  selectedSubject = "";
+
+  const placeholder = new Option("Select a subject", "");
+
+  placeholder.disabled = true;
+  placeholder.hidden = true;
+  placeholder.selected = true;
+
+  $("subjectSelect").replaceChildren(placeholder);
+
+  $("subjectSelect").disabled = true;
+  $("subjectPanel").hidden = true;
+  $("subjectEmpty").hidden = true;
+}
+function selectYear(year) {
+  selectedYear = year;
+  selectedSemester = null;
+
+  resetSubjectFilter();
+
+  $("semesterPanel").hidden = false;
+  $("semesterTitle").textContent =
+    `${yearLabels[year - 1]} — choose semester`;
+
+  document.querySelectorAll("#subjectYears .year-card")
+    .forEach((button) => {
+      const selected = Number(button.dataset.year) === year;
+
+      button.classList.toggle("selected", selected);
+      button.setAttribute("aria-pressed", String(selected));
+    });
 
   $("semesterGrid").replaceChildren();
 
   [year * 2 - 1, year * 2].forEach((semester) => {
     const button = document.createElement("button");
+
     button.className = "secondary-btn";
     button.type = "button";
     button.textContent = `Semester ${semester}`;
+    button.dataset.semester = String(semester);
+    button.setAttribute("aria-pressed", "false");
 
     button.addEventListener("click", () => {
-      $("subjectEmpty").hidden = false;
-      $("subjectHeading").textContent =
-        `Semester ${semester}: no subjects available`;
+      selectSemester(semester);
     });
 
     $("semesterGrid").appendChild(button);
   });
 }
+
+function selectSemester(semester) {
+  resetSubjectFilter();
+  selectedSemester = semester;
+
+  document.querySelectorAll("#semesterGrid button")
+    .forEach((button) => {
+      const selected =
+        Number(button.dataset.semester) === semester;
+
+      button.classList.toggle("selected", selected);
+      button.setAttribute("aria-pressed", String(selected));
+
+      button.textContent =
+        `Semester ${button.dataset.semester}${selected ? " ✓" : ""}`;
+    });
+
+  $("subjectPanel").hidden = false;
+  $("subjectTitle").textContent =
+    `Semester ${semester} — choose your subject`;
+
+const subjects = (subjectsBySemester[semester] || [])
+  .filter((subject) =>
+    !/practical/i.test(
+      subject.replace(/\(Theory and Practical\)/gi, "")
+    )
+  )
+  .map((subject) =>
+    subject.replace(/\(Theory and Practical\)/gi, "(Theory)")
+  );
+  if (subjects.length === 0) {
+    $("subjectEmpty").hidden = false;
+    $("subjectHeading").textContent =
+      `Semester ${semester}: subjects not added yet`;
+
+    $("subjectMessage").textContent =
+      "The subject list for this semester will be available soon.";
+
+    return;
+  }
+
+  subjects.forEach((subject) => {
+    $("subjectSelect").appendChild(
+      new Option(subject, subject)
+    );
+  });
+
+  $("subjectSelect").disabled = false;
+  $("subjectSelect").focus();
+}
+
+$("subjectSelect").addEventListener("change", () => {
+  selectedSubject = $("subjectSelect").value;
+
+  $("subjectEmpty").hidden = !selectedSubject;
+
+  if (!selectedSubject) return;
+
+  $("subjectHeading").textContent =
+    `${selectedSubject} — Semester ${selectedSemester}`;
+
+  $("subjectMessage").textContent =
+    "Subject selected. Approved notes will appear here once the notes database is connected.";
+});
 
 function wordCount(text) {
   return text.trim() ? text.trim().split(/\s+/).length : 0;
