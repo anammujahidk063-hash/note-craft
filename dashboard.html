@@ -120,11 +120,23 @@
             <div class="semester-grid" id="semesterGrid"></div>
           </section>
 
-          <div class="empty-state" id="subjectEmpty" hidden>
-            <span class="empty-icon">▱</span>
-            <h2 id="subjectHeading">No subjects available</h2>
-            <p>Your course subjects will appear after backend integration.</p>
-          </div>
+          <section class="selection-panel" id="subjectPanel" hidden>
+  <h2 id="subjectTitle">Choose your subject</h2>
+
+  <div class="notes-toolbar">
+    <label for="subjectSelect">Subject</label>
+
+    <select id="subjectSelect" disabled>
+      <option value="">Select a subject</option>
+    </select>
+  </div>
+</section>
+
+<div class="empty-state" id="subjectEmpty" hidden>
+  <span class="empty-icon">▱</span>
+  <h2 id="subjectHeading">No subjects available</h2>
+  <p id="subjectMessage"></p>
+</div>
         </section>
 
         <section id="approvedPage" hidden>
